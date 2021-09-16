@@ -1,81 +1,71 @@
 #include <bits/stdc++.h>
+#include "init.h"
 #define ll long long
 using namespace std;
 
-bool stone35[100];
-bool stone45[100];
-bool stone55[100];
-bool stone65[100];
-bool stone75[100];
-ll result[30];
-int cnt;
-int size;
+ll arr[30];
+int cnt; // 시뮬레이션 횟수
 
-void swap(bool &a, bool &b) { 
-	bool tmp = a;
-	a = b;
-	b = tmp;
-}
-
-void initArr(int n, bool arr){
-	for(int i=0;i<n;i++){
-		arr[i] = 1;
-	}
-}
-
-void beforeSuffle(){
+void calculation(){
+	// state는 확률 상태로
+	// 75% = A
+	// 65% = B
+	// 55% = C 
+	// 45% = D
+	// 35% = E
+	// 35% = F
 	
-	memset(stone35,0,size);
-	memset(stone45,0,size);
-	memset(stone55,0,size);
-	memset(stone65,0,size);
-	memset(stone75,0,size);
-	
-	initArr(35, stone35);
-	initArr(45, stone45);
-	initArr(55, stone55);
-	initArr(65, stone65);
-	initArr(75, stone75);
-	
-}
-
-void stonesSuffle(bool arr){
-	for(int i=0;i<1000;i++){
-		for(int j=0;j<100;j++){
-			int r = rand()%(100-j)+j;
-			swap(arr[j], arr[r]);
+	char state = 'A'; // 초기 확률 상태 
+	for(int i=0;i<30;i++){
+		int R = rand()%100;
+		bool result;
+		switch(state){
+			case 'A': result = getResultA(R); break;
+			case 'B': result = getResultB(R); break;
+			case 'C': result = getResultC(R); break;
+			case 'D': result = getResultD(R); break;
+			case 'E': result = getResultE(R); break;
+			case 'F': result = getResultF(R); break;
 		}
-	}
-}
-
-void startSuffle(){함 
-	// stonesSuffle(stone35)
-	// 배열을 전역변수로 선언해서 사용하기가 어려움...
-	// 추가적인 아이디어가 필요 
-}
-
-void suffle(){
-	beforeSuffle();
-	startSuffle();
-}
-
-void init(){
-	size = sizeof(stone35);
-	cin >> cnt;
-}
-
-void startSimulation(){
-	for(int i=0;i<cnt;i++){
-		suffle();
+		
+		if(result) {
+			arr[i]++;
+			if(state != 'F') state++;
+		}
+		else{
+			if(state != 'A') state--;
+		}
+		
+		
 	}
 }
 
 void simulation(){
-	init();
+	srand((unsigned int)time(NULL));
+	memset(arr,0,sizeof(arr));
 	
-	startSimulation();
+	while(cnt--){
+		init();
+		suffle();
+		calculation();
+	}
 }
 
+void printing(){
+	cout << "결과 : " << endl;
+	
+	for(int i=0;i<30;i++){
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+}
+ 
 int main(){
+	
+
+	cin >> cnt;
+	
 	simulation();
+	
+	printing();
 }
