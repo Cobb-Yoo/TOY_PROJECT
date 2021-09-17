@@ -1,4 +1,4 @@
-const int Max = 100;
+const int Max = 10000;
 bool stone25[Max];
 bool stone35[Max];
 bool stone45[Max];
@@ -7,23 +7,19 @@ bool stone65[Max];
 bool stone75[Max];
 
 void init(){
-	for(int i=0;i<25;i++) stone25[i] = 1;
-	for(int i=25;i<Max;i++) stone25[i] = 0;
+	memset(stone25, 0, sizeof(stone25));
+	memset(stone35, 0, sizeof(stone25));
+	memset(stone45, 0, sizeof(stone25));
+	memset(stone55, 0, sizeof(stone25));
+	memset(stone65, 0, sizeof(stone25));
+	memset(stone75, 0, sizeof(stone25));
 	
-	for(int i=0;i<35;i++) stone35[i] = 1;
-	for(int i=35;i<Max;i++) stone35[i] = 0;
-	
-	for(int i=0;i<45;i++) stone45[i] = 1;
-	for(int i=45;i<Max;i++) stone45[i] = 0;
-	
-	for(int i=0;i<55;i++) stone55[i] = 1;
-	for(int i=55;i<Max;i++) stone55[i] = 0;
-	
-	for(int i=0;i<65;i++) stone65[i] = 1;
-	for(int i=65;i<Max;i++) stone65[i] = 0;
-	
-	for(int i=0;i<75;i++) stone75[i] = 1;
-	for(int i=75;i<Max;i++) stone75[i] = 0;
+	for(int i=0;i<2500;i++) stone25[i] = 1;
+	for(int i=0;i<3500;i++) stone35[i] = 1;
+	for(int i=0;i<4500;i++) stone45[i] = 1;
+	for(int i=0;i<5500;i++) stone55[i] = 1;
+	for(int i=0;i<6500;i++) stone65[i] = 1;
+	for(int i=0;i<7500;i++) stone75[i] = 1;
 }
 
 void swap(bool &a, bool &b){
@@ -33,7 +29,7 @@ void swap(bool &a, bool &b){
 }
 
 void suffle(){
-	for(int T=0;T<10000;T++){
+	for(int T=0;T<1000;T++){
 		for(int i=0;i<Max;i++){
 			int r = rand()%(Max-i)+i;
 			swap(stone25[i], stone25[r]);
