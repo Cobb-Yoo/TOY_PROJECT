@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <conio.h>
 #include "init.h"
 #define ll long long
 using namespace std;
@@ -90,6 +91,10 @@ void noname(){
 	//배열을 12*31 →첫번째 클릭에 1을 저장 
 	//홀수는 성공, 짝수는 실패의 경우 카운팅 
 }
+
+void endSimulator(){
+	getch();
+}
  
 int main(){
 	
@@ -100,4 +105,5 @@ int main(){
 	
 	printing();
 	
+	endSimulator();
 }
