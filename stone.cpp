@@ -4,20 +4,42 @@
 #define ll long long
 using namespace std;
 
-ll arr[31];	// 각 단계별 성공누적  
-int cnt; 	// 시뮬레이션 횟수
+ll arr[31];		// 무지성 배열 
+ll brr[13][31];	// 나름 분석 배열 
+int cnt;		// 시뮬레이션 횟수
+
+void calculation2(bool result, int idx, char preState){
+	switch(preState){
+		case 'A':
+			if(result) 	brr[1][idx]++;
+			else 		brr[2][idx]++;	
+			break;
+		case 'B':
+			if(result) 	brr[3][idx]++;
+			else 		brr[4][idx]++;	
+			break;
+		case 'C':
+			if(result) 	brr[5][idx]++;
+			else 		brr[6][idx]++;	
+			break;
+		case 'D':
+			if(result) 	brr[7][idx]++;
+			else 		brr[8][idx]++;	
+			break;
+		case 'E':
+			if(result) 	brr[9][idx]++;
+			else 		brr[10][idx]++;	
+			break;
+		case 'F':
+			if(result) 	brr[11][idx]++;
+			else 		brr[12][idx]++;	
+			break;
+	}
+}
 
 void calculation(){
-	// state는 확률 상태로
-	// 75% = A
-	// 65% = B
-	// 55% = C 
-	// 45% = D
-	// 35% = E
-	// 35% = F
-	
 	char state = 'A'; // 초기 확률 상태 
-	
+	char preState = 'A';
 	// 하나의 돌당 30번의 클릭을 해야 함 
 	for(int i=1;i<31;i++){
 		int R = rand() % Max;
@@ -32,10 +54,11 @@ void calculation(){
 			case 'F': result = getResultF(R); break;
 		}
 		
+		calculation2(result, i, preState);
+		
 		if(result) {
 			//성공하면 확률 등급 하락 
-			arr[i]++; // 무지성 클릭 배열에 i값에 맞는 값을 1 증가
-			// 여기에 나름 분석 데이터를 추가 할 수 있도록 함.
+			arr[i]++; // 무지성 클릭 배열에 i값에 맞는 값을 1 증가	
 			if(state != 'F') state++;
 		}
 		else{
@@ -43,7 +66,7 @@ void calculation(){
 			if(state != 'A') state--;
 		}
 		
-		
+		preState = state;
 	}
 }
 
@@ -66,30 +89,16 @@ void printing(){
 		cout << i<< "번째 성공확률 : " << ((float)arr[i]/(float)cnt) * 100.0 << "%\n";
 	}
 	
-	cout << "끝!\n";
-}
-
-void noname(){
-	// 앞 돌이 75일 때		경우 1
-	// 이번이 성공, 실패 	경우 2 
+	cout << endl;
+	cout << "나름 분석 배열 결과" << endl;
 	
-	// 앞 돌이 65일 때		경우 3 
-	// 이번이 성공, 실패	경우 4 
-	
-	// 앞 돌이 55일 때		경우 5 
-	// 이번이 성공, 실패	경우 6 
-	
-	// 앞 돌이 45일 때		경우 7 
-	// 이번이 성공, 실패	경우 8 
-	
-	// 앞 돌이 35일 때		경우 9 
-	// 이번이 성공, 실패	경우 10 
-	
-	// 앞 돌이 25일 때		경우 11
-	// 이번이 성공, 실패	경우 12
-	
-	//배열을 12*31 →첫번째 클릭에 1을 저장 
-	//홀수는 성공, 짝수는 실패의 경우 카운팅 
+	for(int i=1;i<13;i++) {
+		for(int j=1;j<31;j++){
+			cout << brr[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
 }
 
 void endSimulator(){
@@ -97,7 +106,6 @@ void endSimulator(){
 }
  
 int main(){
-	
 	cout << "시행횟수 입력하셈 : ";
 	cin >> cnt;
 	
